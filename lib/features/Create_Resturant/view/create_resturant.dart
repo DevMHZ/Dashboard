@@ -3,78 +3,124 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class CreateRestaurantView extends StatelessWidget {
-  final CreateRestaurantController createRestaurantView = Get.put(CreateRestaurantController());
+  final CreateRestaurantController createRestaurantView =
+      Get.put(CreateRestaurantController());
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text('Create Restaurant'),
-      ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
         child: SingleChildScrollView(
           child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              TextField(
+              Text(
+                'Restaurant Details',
+                style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+              ),
+              SizedBox(height: 10),
+              _buildTextField(
                 controller: createRestaurantView.titleNameController,
-                decoration: InputDecoration(labelText: 'Title Name'),
+                labelText: 'Title Name',
               ),
-              TextField(
+              _buildTextField(
                 controller: createRestaurantView.endDateController,
-                decoration: InputDecoration(labelText: 'End Date'),
+                labelText: 'End Date',
+                readOnly: true,
+                onTap: () {
+                  createRestaurantView.selectDate(context);
+                },
               ),
-              TextField(
+              _buildTextField(
                 controller: createRestaurantView.nameController,
-                decoration: InputDecoration(labelText: 'Name'),
+                labelText: 'Name',
               ),
-              TextField(
+              _buildTextField(
                 controller: createRestaurantView.phoneController,
-                decoration: InputDecoration(labelText: 'Phone'),
+                labelText: 'Phone',
               ),
-              TextField(
+              _buildTextField(
                 controller: createRestaurantView.subDomainController,
-                decoration: InputDecoration(labelText: 'Sub-domain'),
-              ),
-              TextField(
-                controller: createRestaurantView.emailController,
-                decoration: InputDecoration(labelText: 'Email'),
-              ),
-              TextField(
-                controller: createRestaurantView.profileImgController,
-                decoration: InputDecoration(labelText: 'Profile Image'),
-              ),
-              TextField(
-                controller: createRestaurantView.mainColorController,
-                decoration: InputDecoration(labelText: 'Main-Color'),
-              ),
-              TextField(
-                controller: createRestaurantView.passwordController,
-                decoration: InputDecoration(labelText: 'Password'),
-                obscureText: true,
-              ),
-              TextField(
-                controller: createRestaurantView.mainCategoryController,
-                decoration: InputDecoration(labelText: 'Main Category'),
-              ),
-              TextField(
-                controller: createRestaurantView.subcategoryController,
-                decoration: InputDecoration(
-                  labelText: 'Subcategory (JSON format)',
-                  hintText: '[{"maincategory":"main","name":"shawarma","price":"30000","img":"shawarma","des":"shawarma shawarma"}]',
-                ),
-                maxLines: 5,
+                labelText: 'Sub-domain',
               ),
               SizedBox(height: 20),
-              Obx(() => createRestaurantView.isLoading.value
-                  ? CircularProgressIndicator()
-                  : ElevatedButton(
-                      onPressed: () => createRestaurantView.createRestaurant(context),
-                      child: Text('Create Restaurant'),
-                    )),
+              Text(
+                'Contact Information',
+                style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+              ),
+              SizedBox(height: 10),
+              _buildTextField(
+                controller: createRestaurantView.emailController,
+                labelText: 'Email',
+              ),
+              _buildTextField(
+                controller: createRestaurantView.profileImgController,
+                labelText: 'Profile Image',
+              ),
+              SizedBox(height: 20),
+              Text(
+                'Additional Details',
+                style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+              ),
+              SizedBox(height: 10),
+              _buildTextField(
+                controller: createRestaurantView.mainColorController,
+                labelText: 'Main Color',
+              ),
+              _buildTextField(
+                controller: createRestaurantView.passwordController,
+                labelText: 'Password',
+                obscureText: true,
+              ),
+              // _buildTextField(
+              //   controller: createRestaurantView.mainCategoryController,
+              //   labelText: 'Main Category',
+              // ),
+              // _buildTextField(
+              //   controller: createRestaurantView.subcategoryController,
+              //   labelText: 'Subcategory (JSON format)',
+              //   maxLines: 5,
+              // ),
+              SizedBox(height: 20),
+              Center(
+                child: Obx(() => createRestaurantView.isLoading.value
+                    ? CircularProgressIndicator()
+                    : ElevatedButton(
+                        onPressed: () =>
+                            createRestaurantView.createRestaurant(context),
+                        child: Text('Create Restaurant'),
+                      )),
+              ),
             ],
           ),
         ),
+      ),
+    );
+  }
+
+  Widget _buildTextField({
+    required TextEditingController controller,
+    required String labelText,
+    bool readOnly = false,
+    VoidCallback? onTap,
+    bool obscureText = false,
+    int maxLines = 1,
+  }) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: 8.0),
+      child: TextField(
+        controller: controller,
+        decoration: InputDecoration(
+          labelText: labelText,
+          border: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(8.0),
+          ),
+        ),
+        readOnly: readOnly,
+        onTap: onTap,
+        obscureText: obscureText,
+        maxLines: maxLines,
       ),
     );
   }

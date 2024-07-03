@@ -34,7 +34,7 @@ class LoginController extends GetxController {
         ScaffoldMessenger.of(context)
             .showSnackBar(SnackBar(content: Text('Login successful')));
         print('Login successful');
-        Navigator.pushNamed(context, Routes.homeScreen);
+        Navigator.pushReplacementNamed(context, Routes.homeScreen);
       } else {
         // Handle error
         ScaffoldMessenger.of(context)

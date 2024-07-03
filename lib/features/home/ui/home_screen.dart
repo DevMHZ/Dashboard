@@ -1,4 +1,6 @@
 import 'package:dashboard/features/Create_Resturant/view/create_resturant.dart';
+import 'package:dashboard/features/all_resturant/view/all_resturant_screen.dart';
+import 'package:dashboard/features/delete_resturant/view/delete_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:easy_sidemenu/easy_sidemenu.dart';
 
@@ -14,6 +16,23 @@ class _DashboardScreenState extends State<DashboardScreen> {
   final SideMenuController sideMenuController = SideMenuController();
 
   @override
+  void initState() {
+    super.initState();
+
+    // Listen to page changes and update side menu selection
+    pageController.addListener(() {
+      sideMenuController.changePage(pageController.page!.toInt());
+    });
+  }
+
+  @override
+  void dispose() {
+    pageController.dispose();
+    sideMenuController.dispose();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
@@ -23,36 +42,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
         children: [
           SideMenu(
             key: const Key('side_menu'),
-            items: [
-              SideMenuItem(
-                title: 'All Restaurants',
-                onTap: (index, controller) {
-                  pageController.jumpToPage(0);
-                },
-              ),
-              SideMenuItem(
-                title: 'Create Restaurant',
-                onTap: (index, controller) {
-                  pageController.jumpToPage(1);
-                },
-              ),
-              SideMenuItem(
-                title: 'Update Restaurant',
-                onTap: (index, controller) {
-                  pageController.jumpToPage(2);
-                },
-              ),
-              SideMenuItem(
-                title: 'Delete Restaurant',
-                onTap: (index, controller) {
-                  pageController.jumpToPage(3);
-                },
-              ),
-            ],
             controller: sideMenuController,
-            onDisplayModeChanged: (mode) {
-              print(mode);
-            },
             style: SideMenuStyle(
               displayMode: SideMenuDisplayMode.auto,
               hoverColor: Colors.blue[100],
@@ -65,6 +55,39 @@ class _DashboardScreenState extends State<DashboardScreen> {
               openSideMenuWidth: 200,
               compactSideMenuWidth: 40,
             ),
+            items: [
+              SideMenuItem(
+                title: 'All Restaurants',
+                onTap: (index, controller) {
+                  pageController.jumpToPage(0);
+                  controller.changePage(index);
+                },
+              ),
+              SideMenuItem(
+                title: 'Create Restaurant',
+                onTap: (index, controller) {
+                  pageController.jumpToPage(1);
+                  controller.changePage(index);
+                },
+              ),
+              SideMenuItem(
+                title: 'Update Restaurant',
+                onTap: (index, controller) {
+                  pageController.jumpToPage(2);
+                  controller.changePage(index);
+                },
+              ),
+              SideMenuItem(
+                title: 'Delete Restaurant',
+                onTap: (index, controller) {
+                  pageController.jumpToPage(3);
+                  controller.changePage(index);
+                },
+              ),
+            ],
+            onDisplayModeChanged: (mode) {
+              print(mode);
+            },
             showToggle: true,
             alwaysShowFooter: false,
             collapseWidth: 600,
@@ -73,26 +96,15 @@ class _DashboardScreenState extends State<DashboardScreen> {
             child: PageView(
               controller: pageController,
               children: [
-                AllRestaurantsPage(),
+                RestaurantListScreen(),
                 CreateRestaurantView(),
                 UpdateRestaurantPage(),
-                DeleteRestaurantPage(),
+                DeleteRestaurantView(),
               ],
             ),
           ),
         ],
       ),
-    );
-  }
-}
-
-class AllRestaurantsPage extends StatelessWidget {
-  const AllRestaurantsPage({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return Center(
-      child: Text('All Restaurants Page'),
     );
   }
 }
@@ -104,17 +116,6 @@ class UpdateRestaurantPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Center(
       child: Text('Update Restaurant Page'),
-    );
-  }
-}
-
-class DeleteRestaurantPage extends StatelessWidget {
-  const DeleteRestaurantPage({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return Center(
-      child: Text('Delete Restaurant Page'),
     );
   }
 }

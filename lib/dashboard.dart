@@ -2,7 +2,6 @@ import 'package:dashboard/core/routing/app_router.dart';
 import 'package:dashboard/core/theming/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-
 import 'core/routing/routes.dart';
 
 class DashApp extends StatelessWidget {
@@ -21,7 +20,7 @@ class DashApp extends StatelessWidget {
             scaffoldBackgroundColor: Colors.white,
           ),
           debugShowCheckedModeBanner: false,
-          initialRoute: Routes.LoginView,
+          initialRoute: Routes.homeScreen,
           onGenerateRoute: appRouter.generateRoute,
         ));
   }

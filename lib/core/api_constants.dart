@@ -3,6 +3,4 @@ class ApiConstants {
 
   static const String login = "$apiBaseUrl/Main/login"; 
   static const String createResturant = "$apiBaseUrl/Main/"; 
-  
-  
 }

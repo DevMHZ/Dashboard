@@ -1,7 +1,9 @@
 import 'dart:convert';
+import 'package:dashboard/core/api_constants.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
+import 'package:intl/intl.dart';
 import '../../../core/routing/routes.dart';
 
 class CreateRestaurantController extends GetxController {
@@ -21,7 +23,7 @@ class CreateRestaurantController extends GetxController {
   void createRestaurant(BuildContext context) async {
     isLoading.value = true;
 
-    final url = 'https://instinctive-fish-utahceratops.glitch.me/api/v1/Main/';
+    final url = ApiConstants.createResturant;
     final headers = {'Content-Type': 'application/json'};
     final body = jsonEncode({
       'titleName': titleNameController.text,
@@ -33,8 +35,8 @@ class CreateRestaurantController extends GetxController {
       'profileimg': profileImgController.text,
       'mainColor': mainColorController.text,
       'password': passwordController.text,
-      'maincategory': [mainCategoryController.text],
-      'subcategory': jsonDecode(subcategoryController.text),
+      'maincategory': [],
+      'subcategory': [],
     });
 
     try {
@@ -48,12 +50,14 @@ class CreateRestaurantController extends GetxController {
 
       if (response.statusCode == 200) {
         // Handle success
-        ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('Restaurant created successfully')));
+        ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(content: Text('Restaurant created successfully')));
         print('Restaurant created successfully');
         Navigator.pushNamed(context, Routes.homeScreen);
       } else {
         // Handle error
-        ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('Failed to create restaurant')));
+        ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(content: Text('Failed to create restaurant')));
         showDialog(
           context: context,
           builder: (context) => AlertDialog(
@@ -72,10 +76,23 @@ class CreateRestaurantController extends GetxController {
         print('Failed to create restaurant: ${response.body}');
       }
     } catch (e) {
-      ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('An error occurred')));
+      ScaffoldMessenger.of(context)
+          .showSnackBar(SnackBar(content: Text('An error occurred')));
       print('An error occurred: $e');
     } finally {
       isLoading.value = false;
+    }
+  }
+
+  Future<void> selectDate(BuildContext context) async {
+    DateTime? picked = await showDatePicker(
+      context: context,
+      initialDate: DateTime.now(),
+      firstDate: DateTime(2000),
+      lastDate: DateTime(2101),
+    );
+    if (picked != null) {
+      endDateController.text = DateFormat('dd-MM-yyyy').format(picked);
     }
   }
 }
