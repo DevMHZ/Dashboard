@@ -9,90 +9,93 @@ class CreateRestaurantView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: SingleChildScrollView(
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text(
-                'Restaurant Details',
-                style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
-              ),
-              SizedBox(height: 10),
-              _buildTextField(
-                controller: createRestaurantView.titleNameController,
-                labelText: 'Title Name',
-              ),
-              _buildTextField(
-                controller: createRestaurantView.endDateController,
-                labelText: 'End Date',
-                readOnly: true,
-                onTap: () {
-                  createRestaurantView.selectDate(context);
-                },
-              ),
-              _buildTextField(
-                controller: createRestaurantView.nameController,
-                labelText: 'Name',
-              ),
-              _buildTextField(
-                controller: createRestaurantView.phoneController,
-                labelText: 'Phone',
-              ),
-              _buildTextField(
-                controller: createRestaurantView.subDomainController,
-                labelText: 'Sub-domain',
-              ),
-              SizedBox(height: 20),
-              Text(
-                'Contact Information',
-                style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
-              ),
-              SizedBox(height: 10),
-              _buildTextField(
-                controller: createRestaurantView.emailController,
-                labelText: 'Email',
-              ),
-              _buildTextField(
-                controller: createRestaurantView.profileImgController,
-                labelText: 'Profile Image',
-              ),
-              SizedBox(height: 20),
-              Text(
-                'Additional Details',
-                style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
-              ),
-              SizedBox(height: 10),
-              _buildTextField(
-                controller: createRestaurantView.mainColorController,
-                labelText: 'Main Color',
-              ),
-              _buildTextField(
-                controller: createRestaurantView.passwordController,
-                labelText: 'Password',
-                obscureText: true,
-              ),
-              // _buildTextField(
-              //   controller: createRestaurantView.mainCategoryController,
-              //   labelText: 'Main Category',
-              // ),
-              // _buildTextField(
-              //   controller: createRestaurantView.subcategoryController,
-              //   labelText: 'Subcategory (JSON format)',
-              //   maxLines: 5,
-              // ),
-              SizedBox(height: 20),
-              Center(
-                child: Obx(() => createRestaurantView.isLoading.value
-                    ? CircularProgressIndicator()
-                    : ElevatedButton(
-                        onPressed: () =>
-                            createRestaurantView.createRestaurant(context),
-                        child: Text('Create Restaurant'),
-                      )),
-              ),
-            ],
+      body: Directionality(
+        textDirection: TextDirection.rtl,
+        child: Padding(
+          padding: const EdgeInsets.all(16.0),
+          child: SingleChildScrollView(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  'معلومات المطهم',
+                  style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                ),
+                SizedBox(height: 10),
+                _buildTextField(
+                  controller: createRestaurantView.titleNameController,
+                  labelText: 'اسم المطعم',
+                ),
+                _buildTextField(
+                  controller: createRestaurantView.endDateController,
+                  labelText: 'تاريخ الانتهاء',
+                  readOnly: true,
+                  onTap: () {
+                    createRestaurantView.selectDate(context);
+                  },
+                ),
+                _buildTextField(
+                  controller: createRestaurantView.nameController,
+                  labelText: 'اسم المستخدم',
+                ),
+                _buildTextField(
+                  controller: createRestaurantView.phoneController,
+                  labelText: 'رقم الهاتف',
+                ),
+                _buildTextField(
+                  controller: createRestaurantView.subDomainController,
+                  labelText: 'الدومين',
+                ),
+                SizedBox(height: 20),
+                Text(
+                  'معلومات التواصل',
+                  style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                ),
+                SizedBox(height: 10),
+                _buildTextField(
+                  controller: createRestaurantView.emailController,
+                  labelText: 'الايميل',
+                ),
+                _buildTextField(
+                  controller: createRestaurantView.profileImgController,
+                  labelText: 'صورة الملف الشخصي',
+                ),
+                SizedBox(height: 20),
+                Text(
+                  'معلومات اضافية',
+                  style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                ),
+                SizedBox(height: 10),
+                _buildTextField(
+                  controller: createRestaurantView.mainColorController,
+                  labelText: 'اللون الاساسي',
+                ),
+                _buildTextField(
+                  controller: createRestaurantView.passwordController,
+                  labelText: 'كلمة السر',
+                  obscureText: true,
+                ),
+                // _buildTextField(
+                //   controller: createRestaurantView.mainCategoryController,
+                //   labelText: 'Main Category',
+                // ),
+                // _buildTextField(
+                //   controller: createRestaurantView.subcategoryController,
+                //   labelText: 'Subcategory (JSON format)',
+                //   maxLines: 5,
+                // ),
+                SizedBox(height: 20),
+                Center(
+                  child: Obx(() => createRestaurantView.isLoading.value
+                      ? CircularProgressIndicator()
+                      : ElevatedButton(
+                          onPressed: () =>
+                              createRestaurantView.createRestaurant(context),
+                          child: Text('إنشاء مطعم'),
+                        )),
+                ),
+              ],
+            ),
           ),
         ),
       ),

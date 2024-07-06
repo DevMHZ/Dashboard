@@ -1,6 +1,5 @@
 import 'package:dashboard/features/Create_Resturant/view/create_resturant.dart';
 import 'package:dashboard/features/all_resturant/view/all_resturant_screen.dart';
-import 'package:dashboard/features/delete_resturant/view/delete_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:easy_sidemenu/easy_sidemenu.dart';
 
@@ -40,7 +39,17 @@ class _DashboardScreenState extends State<DashboardScreen> {
       ),
       body: Row(
         children: [
-          SideMenu(
+          Expanded(
+            child: PageView(
+              physics: NeverScrollableScrollPhysics(),
+              controller: pageController,
+              children: [
+                RestaurantListScreen(),
+                CreateRestaurantView(),
+              ],
+            ),
+          ),
+              SideMenu(
             key: const Key('side_menu'),
             controller: sideMenuController,
             style: SideMenuStyle(
@@ -57,30 +66,28 @@ class _DashboardScreenState extends State<DashboardScreen> {
             ),
             items: [
               SideMenuItem(
-                title: 'All Restaurants',
+                trailing: Row(
+                  children: [
+                    Text(' كل المطاعم'),
+                     SizedBox(width: 10,),
+                  ],
+                ),
+                title: '',
                 onTap: (index, controller) {
                   pageController.jumpToPage(0);
                   controller.changePage(index);
                 },
               ),
               SideMenuItem(
-                title: 'Create Restaurant',
+                 trailing: Row(
+                  children: [
+                    Text('إنشاء مطعم'),
+                     SizedBox(width: 10,),
+                  ],
+                ),
+                title: '',
                 onTap: (index, controller) {
                   pageController.jumpToPage(1);
-                  controller.changePage(index);
-                },
-              ),
-              SideMenuItem(
-                title: 'Update Restaurant',
-                onTap: (index, controller) {
-                  pageController.jumpToPage(2);
-                  controller.changePage(index);
-                },
-              ),
-              SideMenuItem(
-                title: 'Delete Restaurant',
-                onTap: (index, controller) {
-                  pageController.jumpToPage(3);
                   controller.changePage(index);
                 },
               ),
@@ -92,30 +99,10 @@ class _DashboardScreenState extends State<DashboardScreen> {
             alwaysShowFooter: false,
             collapseWidth: 600,
           ),
-          Expanded(
-            child: PageView(
-              controller: pageController,
-              children: [
-                RestaurantListScreen(),
-                CreateRestaurantView(),
-                UpdateRestaurantPage(),
-                DeleteRestaurantView(),
-              ],
-            ),
-          ),
+      
         ],
       ),
     );
   }
 }
 
-class UpdateRestaurantPage extends StatelessWidget {
-  const UpdateRestaurantPage({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return Center(
-      child: Text('Update Restaurant Page'),
-    );
-  }
-}

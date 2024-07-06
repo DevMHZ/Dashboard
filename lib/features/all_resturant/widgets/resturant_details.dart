@@ -13,6 +13,17 @@ class RestaurantDetailsPage extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: Text(restaurant.name ?? 'Restaurant Details'),
+        actions: [
+          IconButton(onPressed: (){}, icon: Icon(Icons.edit,color: Colors.black,)),
+          SizedBox(width: 10,),
+          restaurantController.isDeleteLoading.value
+          ?CircularProgressIndicator()
+          :IconButton(onPressed: (){
+            restaurantController.deleteRestaurant(
+                                  context, restaurant.sId!);
+          }, icon: Icon(Icons.delete,color: Colors.red,)),
+          SizedBox(width: 10,),
+        ],
       ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
@@ -73,10 +84,17 @@ class RestaurantDetailsPage extends StatelessWidget {
                   children: restaurant.maincategory!
                       .map((category) => Padding(
                             padding: const EdgeInsets.symmetric(vertical: 4.0),
-                            child: Text(
-                              category,
-                              style: TextStyle(fontSize: 16),
-                            ),
+                            // child: Text(
+                            //   category,
+                            //   style: TextStyle(fontSize: 16),
+                            // ),
+                    child:Wrap(
+                      spacing: 10,
+                      children: [
+                        for( var i in category.split(","))
+                        Chip(label: Text(i))
+                      ],
+                    )
                           ))
                       .toList(),
                 ),
